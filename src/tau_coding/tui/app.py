@@ -553,7 +553,13 @@ PASTE_DISPLAY_THRESHOLD = 2_000
 class PromptInput(TextArea):
     """Multiline prompt input with completion key bindings."""
 
-    BINDINGS: ClassVar[list[BindingEntry]] = []
+    BINDINGS: ClassVar[list[BindingEntry]] = [
+        # Herdr may re-encode terminal Esc+b/f word motion as Kitty Alt+b/f.
+        Binding("alt+left,alt+b", "cursor_word_left", show=False),
+        Binding("alt+right,alt+f", "cursor_word_right", show=False),
+        Binding("alt+shift+left", "cursor_word_left(True)", show=False),
+        Binding("alt+shift+right", "cursor_word_right(True)", show=False),
+    ]
     shell_mode_style: str = ""
 
     def __init__(
